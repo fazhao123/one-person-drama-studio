@@ -28,10 +28,10 @@ pip install -r requirements.txt
 
 ```bash
 cp .env.example .env
-# 编辑 .env，填入 DeepSeek API Key
+# 编辑 .env，填入通义千问 API Key
 ```
 
-获取 API Key: [platform.deepseek.com](https://platform.deepseek.com)
+获取 API Key: [dashscope.console.aliyun.com](https://dashscope.console.aliyun.com/apiKey)
 
 ### 3. 启动
 
@@ -53,7 +53,7 @@ streamlit run app.py
 ## 技术栈
 
 - **前端**: Streamlit
-- **LLM**: DeepSeek Chat API
+- **LLM**: 通义千问 (Qwen) / OpenAI 兼容 API
 - **语言**: Python 3.10+
 
 ## 项目结构

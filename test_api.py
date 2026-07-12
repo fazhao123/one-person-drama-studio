@@ -1,24 +1,26 @@
-"""Quick API connectivity test — verify DeepSeek works before launching app."""
+"""Quick API connectivity test — verify LLM API works before launching app."""
 import os
 from dotenv import load_dotenv
 from openai import OpenAI
 
 load_dotenv()
 
-api_key = os.getenv("DEEPSEEK_API_KEY")
-base_url = os.getenv("DEEPSEEK_BASE_URL", "https://api.deepseek.com/v1")
+api_key = os.getenv("LLM_API_KEY")
+base_url = os.getenv("LLM_BASE_URL", "https://dashscope.aliyuncs.com/compatible-mode/v1")
+model = os.getenv("LLM_MODEL", "qwen-plus")
 
 if not api_key:
-    print("[FAIL] DEEPSEEK_API_KEY not set in .env")
+    print("[FAIL] LLM_API_KEY not set in .env")
     exit(1)
 
 print(f"Base URL: {base_url}")
+print(f"Model: {model}")
 
 client = OpenAI(api_key=api_key, base_url=base_url)
 
 try:
     r = client.chat.completions.create(
-        model="deepseek-chat",
+        model=model,
         messages=[{"role": "user", "content": "回复一个字：好"}],
         max_tokens=5,
     )

@@ -25,11 +25,15 @@ st.set_page_config(
 
 @st.cache_resource
 def get_client():
-    api_key = os.getenv("DEEPSEEK_API_KEY")
-    base_url = os.getenv("DEEPSEEK_BASE_URL", "https://api.deepseek.com/v1")
+    api_key = os.getenv("LLM_API_KEY")
+    base_url = os.getenv("LLM_BASE_URL", "https://dashscope.aliyuncs.com/compatible-mode/v1")
     if not api_key:
         return None
     return OpenAI(api_key=api_key, base_url=base_url)
+
+
+def get_model():
+    return os.getenv("LLM_MODEL", "qwen-plus")
 
 
 def call_deepseek(prompt: str):
@@ -41,7 +45,7 @@ def call_deepseek(prompt: str):
 
     try:
         response = client.chat.completions.create(
-            model="deepseek-chat",
+            model=get_model(),
             messages=[
                 {"role": "system", "content": SYSTEM_PROMPT},
                 {"role": "user", "content": prompt},
@@ -81,11 +85,11 @@ with st.sidebar:
     """)
 
     api_status = "✅ 已连接" if get_client() else "⚠️ 未配置"
-    st.info(f"DeepSeek API: {api_status}")
+    st.info(f"LLM API: {api_status} ({get_model()})")
 
     if not get_client():
         st.code("""# 复制 .env.example 为 .env 并填入 Key
-DEEPSEEK_API_KEY=sk-your-key-here""")
+LLM_API_KEY=your-qwen-api-key""")
 
     st.divider()
     st.caption("2026 AI先锋未来人才大赛 · 山海星辰命题")
